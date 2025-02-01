@@ -6,12 +6,10 @@ import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 
 interface ChatDetailPageProps {
-  params: {
-    chatId: string;
-  };
+  chatId: string;
 }
 
-export default async function ChatDetailPage({ params }: ChatDetailPageProps) {
+export default async function ChatDetailPage({ params} :{ params: Promise<ChatDetailPageProps>}) {
   const { userId } = await auth();
   if (!userId) {
     redirect("/sign-in");
@@ -19,7 +17,7 @@ export default async function ChatDetailPage({ params }: ChatDetailPageProps) {
 
   const chat = await prisma.chat.findUnique({
     where: {
-      id: params.chatId,
+      id: (await params).chatId,
     },
     include: {
       Group: true,
