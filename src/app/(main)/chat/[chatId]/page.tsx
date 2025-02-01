@@ -1,7 +1,7 @@
 import { ChatHeader } from "@/components/chat/chat-header";
 import { ChatMessages } from "@/components/chat/chat-messages";
 import { ChatInput } from "@/components/chat/chat-input";
-import { auth } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 
@@ -12,7 +12,7 @@ interface ChatDetailPageProps {
 }
 
 export default async function ChatDetailPage({ params }: ChatDetailPageProps) {
-  const { userId } = auth();
+  const { userId } = await auth();
   if (!userId) {
     redirect("/sign-in");
   }
