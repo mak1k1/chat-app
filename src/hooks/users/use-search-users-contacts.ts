@@ -8,7 +8,7 @@ export interface SearchUsersContactsOptions {
 }
 
 async function searchUsersContacts(searchQuery: string): Promise<SearchUsersContactsResponse> {
-  const response = await fetch(`/api/users/contacts/search?query=${encodeURIComponent(searchQuery)}`)
+  const response = await fetch(`/api/users/contacts/search?searchQuery=${encodeURIComponent(searchQuery)}`)
   const data = await response.json()
 
   if (!response.ok) {

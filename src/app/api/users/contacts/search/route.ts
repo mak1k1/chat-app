@@ -7,7 +7,7 @@ const SEARCHABLE_USER_FIELDS = ['firstName', 'lastName', 'email', 'phone'] as co
 
 export const SearchUsersContactsConfig = {
   include: {
-    user: true
+    contact: true
   },
   take: 10
 } as const
@@ -17,13 +17,15 @@ export type SearchUsersContactsResponse = Prisma.ContactGetPayload<typeof Search
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
-    const query = searchParams.get('query')
+    const query = searchParams.get('searchQuery')
     const { userId } = await auth()
 
     if (!userId) {
       return NextResponse.json(
         { error: "Unauthorized" },
-        { status: 401 }
+        {
+          status: 401,
+        },
       )
     }
 
@@ -40,16 +42,18 @@ export async function GET(request: Request) {
         },
         include: {
             contacts: {
-                where: {
-                  OR: SEARCHABLE_USER_FIELDS.map(field => ({
-                    [field]: {
-                      contains: query,
-                      mode: 'insensitive'
-                    }
-                  }))
-                },
                 include: {
-                    user: true
+                    contact: true
+                },
+                where: {
+                    contact: {
+                        OR: SEARCHABLE_USER_FIELDS.map(field => ({
+                            [field]: {
+                                contains: query,
+                                mode: 'insensitive'
+                            }
+                        }))
+                    }
                 }
             }
         }
@@ -62,6 +66,7 @@ export async function GET(request: Request) {
         )
     }
 
+    console.log(user.contacts)
     return NextResponse.json<SearchUsersContactsResponse>(user.contacts, { status: 200 })
 
   } catch (error) {
