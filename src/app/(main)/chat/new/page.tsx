@@ -5,8 +5,9 @@ import { ContactSearch } from "@/components/features/contacts/contact-search";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useSearchUsersContacts } from "@/hooks/users/use-search-users-contacts";
-import { Contact } from "@prisma/client";
+import { Contact, Prisma } from "@prisma/client";
 import Image from "next/image";
+import { SearchUsersContactsConfig } from "@/types/api/users";
 
 export default function NewChatPage() {
   const [searchQuery, setSearchQuery] = useState<string | null>(null);
@@ -46,30 +47,30 @@ export default function NewChatPage() {
 
           {contacts &&
             contacts.length > 0 &&
-            contacts.map((contact) => (
+            contacts.map((contact: Prisma.ContactGetPayload<typeof SearchUsersContactsConfig>) => (
               <div
                 key={contact.id}
                 className="mt-6 p-4 border rounded-lg hover:bg-accent/50 transition-colors"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    {contact.user.imageUrl ? (
+                    {contact.contact.imageUrl ? (
                       <Image
-                        src={contact.user.imageUrl}
-                        alt={contact.user.firstName + " " + contact.user.lastName || ""}
+                        src={contact.contact.imageUrl}
+                        alt={contact.contact.firstName + " " + contact.contact.lastName || ""}
                         className="w-12 h-12 rounded-full object-cover border"
                       />
                     ) : (
                       <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
                         <span className="text-lg font-medium text-muted-foreground">
-                          {contact.user.firstName?.[0]?.toUpperCase() + contact.user.lastName?.[0]?.toUpperCase()}
+                          {contact.contact.firstName?.[0]?.toUpperCase() + contact.contact.lastName?.[0]?.toUpperCase()}
                         </span>
                       </div>
                     )}
                     <div className="space-y-1">
-                      <p className="font-medium">{contact.user.firstName + " " + contact.user.lastName}</p>
+                      <p className="font-medium">{contact.contact.firstName + " " + contact.contact.lastName}</p>
                       <p className="text-sm text-muted-foreground">
-                        {contact.user.phone}
+                        {contact.contact.phone}
                       </p>
                     </div>
                   </div>

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { userKeys } from "./query-keys"
-import { SearchUsersContactsResponse } from "@/types/api/contacts"
+import { SearchUsersContactsResponse } from "@/types/api/users"
 
 export interface SearchUsersContactsOptions {
   searchQuery: string
