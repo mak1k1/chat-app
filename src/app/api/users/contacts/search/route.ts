@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs/server"
-import { SearchUsersContactsResponse } from "@/types/api/contacts"
+import { SearchUsersContactsResponse } from "@/types/api/users"
 import { SEARCHABLE_USER_FIELDS } from "@/constants/api"
 
 export async function GET(request: Request) {

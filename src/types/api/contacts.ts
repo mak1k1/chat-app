@@ -1,14 +1,14 @@
 import { Prisma } from "@prisma/client"
 
-export const SearchUsersContactsConfig = {
+export const SearchContactsConfig = {
   include: {
     contact: true
   },
   take: 10
 } as const
 
-export type SearchUsersContactsRequest = {
+export type SearchContactsRequest = {
   searchQuery: string
 }
 
-export type SearchUsersContactsResponse = Prisma.ContactGetPayload<typeof SearchUsersContactsConfig>[] 
+export type SearchContactsResponse = Prisma.ContactGetPayload<typeof SearchContactsConfig>[] 

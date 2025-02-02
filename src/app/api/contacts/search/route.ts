@@ -1,18 +1,8 @@
 import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
-import { User, Prisma } from "@prisma/client"
-
-const SEARCHABLE_USER_FIELDS = ['firstName', 'lastName', 'email', 'phone'] as const satisfies readonly (keyof User)[];
-
-export const SearchUsersContactsConfig = {
-  include: {
-    user: true
-  },
-  take: 10
-} as const
-
-export type SearchUsersContactsResponse = Prisma.ContactGetPayload<typeof SearchUsersContactsConfig>[]
-
+import { SEARCHABLE_USER_FIELDS } from "@/constants/api"
+import { SearchContactsResponse } from "@/types/api/contacts"
+import { SearchContactsConfig } from "@/types/api/contacts"
 
 export async function GET(request: Request) {
   try {
@@ -32,11 +22,11 @@ export async function GET(request: Request) {
           }
         }))
       },
-      include: SearchUsersContactsConfig.include,
-      take: SearchUsersContactsConfig.take
+      include: SearchContactsConfig.include,
+      take: SearchContactsConfig.take
     })
 
-    return NextResponse.json<SearchUsersContactsResponse>(contacts, { status: 200 })
+    return NextResponse.json<SearchContactsResponse>(contacts, { status: 200 })
 
   } catch (error) {
     console.error('[CONTACTS_SEARCH]', error)
