@@ -1,18 +1,8 @@
 import { prisma } from "@/lib/prisma"
 import { NextResponse } from "next/server"
-import { User, Prisma } from "@prisma/client"
 import { auth } from "@clerk/nextjs/server"
-
-const SEARCHABLE_USER_FIELDS = ['firstName', 'lastName', 'email', 'phone'] as const satisfies readonly (keyof User)[];
-
-export const SearchUsersContactsConfig = {
-  include: {
-    contact: true
-  },
-  take: 10
-} as const
-
-export type SearchUsersContactsResponse = Prisma.ContactGetPayload<typeof SearchUsersContactsConfig>[]
+import { SearchUsersContactsResponse } from "@/types/api/contacts"
+import { SEARCHABLE_USER_FIELDS } from "@/constants/api"
 
 export async function GET(request: Request) {
   try {
@@ -23,9 +13,7 @@ export async function GET(request: Request) {
     if (!userId) {
       return NextResponse.json(
         { error: "Unauthorized" },
-        {
-          status: 401,
-        },
+        { status: 401 }
       )
     }
 
@@ -37,36 +25,35 @@ export async function GET(request: Request) {
     }
 
     const user = await prisma.user.findFirst({
-        where: {
-            id: userId
-        },
-        include: {
-            contacts: {
+      where: {
+        id: userId
+      },
+      include: {
+        contacts: {
                 include: {
                     contact: true
                 },
-                where: {
-                    contact: {
-                        OR: SEARCHABLE_USER_FIELDS.map(field => ({
-                            [field]: {
-                                contains: query,
-                                mode: 'insensitive'
-                            }
-                        }))
-                    }
+          where: {
+            contact: {
+              OR: SEARCHABLE_USER_FIELDS.map(field => ({
+                [field]: {
+                  contains: query,
+                  mode: 'insensitive'
                 }
+              }))
             }
+          }
         }
+      }
     })
 
     if (!user) {
-        return NextResponse.json(
-          { error: "User not found" },
-          { status: 404 }
-        )
+      return NextResponse.json(
+        { error: "User not found" },
+        { status: 404 }
+      )
     }
 
-    console.log(user.contacts)
     return NextResponse.json<SearchUsersContactsResponse>(user.contacts, { status: 200 })
 
   } catch (error) {
