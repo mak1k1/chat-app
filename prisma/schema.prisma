@@ -10,8 +10,10 @@ datasource db {
 
 model User {
   id          String        @id @default(uuid())
-  username    String        @unique
-  phone       String        @unique
+  firstName   String
+  lastName    String
+  email       String        @unique
+  phone       String?        @unique
   imageUrl    String?       @db.Text
   bio         String?       @db.Text
   lastSeen    DateTime      @default(now())

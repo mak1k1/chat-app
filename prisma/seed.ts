@@ -18,7 +18,9 @@ async function main() {
   // Create users
   const alice = await prisma.user.create({
     data: {
-      username: 'alice',
+      firstName: 'alice',
+      lastName: 'smith',
+      email: 'alice@example.com',
       phone: '+1234567890',
       imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=alice',
       bio: 'Hey there! I am Alice',
@@ -27,7 +29,9 @@ async function main() {
 
   const bob = await prisma.user.create({
     data: {
-      username: 'bob',
+      firstName: 'bob',
+      lastName: 'smith',
+      email: 'bob@example.com',
       phone: '+1234567891',
       imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=bob',
       bio: 'Hey there! I am Bob',
@@ -36,7 +40,9 @@ async function main() {
 
   const charlie = await prisma.user.create({
     data: {
-      username: 'charlie',
+      firstName: 'charlie',
+      lastName: 'smith',
+      email: 'charlie@example.com',
       phone: '+1234567892',
       imageUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=charlie',
       bio: 'Hey there! I am Charlie',
