@@ -12,3 +12,5 @@ export type SearchUsersContactsRequest = {
 }
 
 export type SearchUsersContactsResponse = Prisma.ContactGetPayload<typeof SearchUsersContactsConfig>[] 
+
+export type GetUserContactsResponse = Prisma.ContactGetPayload<typeof SearchUsersContactsConfig>[] 

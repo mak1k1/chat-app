@@ -52,14 +52,14 @@ async function main() {
   // Create contacts
   await prisma.contact.create({
     data: {
-      userId: alice.id,
+      ownerId: alice.id,
       contactId: bob.id,
     },
   })
 
   await prisma.contact.create({
     data: {
-      userId: bob.id,
+      ownerId: bob.id,
       contactId: alice.id,
     },
   })
