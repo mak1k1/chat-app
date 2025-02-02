@@ -1,19 +1,20 @@
 import { ChatHeader } from "@/components/features/chat/chat-header";
 import { ChatMessages } from "@/components/features/chat/chat-messages";
 import { ChatInput } from "@/components/features/chat/chat-input";
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
-import prisma from "@/lib/prisma";
 
 interface ChatDetailPageProps {
   chatId: string;
 }
 
-export default function ChatDetailPage({ params} :{ params: Promise<ChatDetailPageProps>}) {
-  
+export default async function ChatDetailPage({
+  params,
+}: {
+  params: Promise<ChatDetailPageProps>;
+}) {
+  const { chatId } = await params;
   return (
     <div className="flex-1 flex flex-col">
-      <ChatHeader title={title} />
+      <ChatHeader title={chatId} />
       <ChatMessages />
       <ChatInput />
     </div>

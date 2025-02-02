@@ -6,6 +6,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useSearchUsersContacts } from "@/hooks/users/use-search-users-contacts";
 import { Contact } from "@prisma/client";
+import Image from "next/image";
 
 export default function NewChatPage() {
   const [searchQuery, setSearchQuery] = useState<string | null>(null);
@@ -53,7 +54,7 @@ export default function NewChatPage() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     {contact.user.imageUrl ? (
-                      <img
+                      <Image
                         src={contact.user.imageUrl}
                         alt={contact.user.firstName + " " + contact.user.lastName || ""}
                         className="w-12 h-12 rounded-full object-cover border"

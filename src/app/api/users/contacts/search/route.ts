@@ -40,6 +40,14 @@ export async function GET(request: Request) {
         },
         include: {
             contacts: {
+                where: {
+                  OR: SEARCHABLE_USER_FIELDS.map(field => ({
+                    [field]: {
+                      contains: query,
+                      mode: 'insensitive'
+                    }
+                  }))
+                },
                 include: {
                     user: true
                 }
