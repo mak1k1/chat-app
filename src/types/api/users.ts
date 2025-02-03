@@ -7,10 +7,19 @@ export const SearchUsersContactsConfig = {
   take: 10
 } as const
 
+export const GetUsersContactRequestsConfig = {
+  include: {
+    sender: true
+  },
+  take: 10
+} as const
+
 export type SearchUsersContactsRequest = {
   searchQuery: string
 }
 
 export type SearchUsersContactsResponse = Prisma.ContactGetPayload<typeof SearchUsersContactsConfig>[] 
 
-export type GetUserContactsResponse = Prisma.ContactGetPayload<typeof SearchUsersContactsConfig>[] 
+export type GetUserContactsResponse = Prisma.ContactGetPayload<typeof SearchUsersContactsConfig>[]
+
+export type GetUserContactRequestsResponse = Prisma.ContactRequestGetPayload<typeof GetUsersContactRequestsConfig>[]

@@ -22,6 +22,6 @@ export function useGetUserContacts({ enabled = true }: UsersContactsOptions) {
     queryKey: userKeys.contacts(),
     queryFn: () => getUserContacts(),
     enabled: enabled,
-    retry: false,
+    retry: false, 
   })
 }
