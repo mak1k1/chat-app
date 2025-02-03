@@ -3,7 +3,7 @@
 import { useGetUserContacts } from "@/hooks/users/use-get-user-contacts";
 
 export function ContactList() {
-  const { data: contacts, isLoading } = useGetUserContacts({ enabled: true });
+  const { data: contacts, isLoading } = useGetUserContacts();
 
   if (isLoading) return <div>Loading...</div>;
 

@@ -2,11 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { userKeys } from "./query-keys"
 import { GetUserContactsResponse } from "@/types/api/users"
 
-export interface UsersContactsOptions {
-  enabled?: boolean
-}
-
-async function getUserContacts(): Promise<GetUserContactsResponse> {
+export async function getUserContacts(): Promise<GetUserContactsResponse> {
   const response = await fetch(`/api/users/contacts/`)
   const data = await response.json()
 
@@ -17,11 +13,10 @@ async function getUserContacts(): Promise<GetUserContactsResponse> {
   return data
 }
 
-export function useGetUserContacts({ enabled = true }: UsersContactsOptions) {
+export function useGetUserContacts() {
   return useQuery({
     queryKey: userKeys.contacts(),
     queryFn: () => getUserContacts(),
-    enabled: enabled,
-    retry: false, 
+    retry: false,
   })
 }

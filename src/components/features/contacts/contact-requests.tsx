@@ -3,7 +3,7 @@
 import { useGetUserContactRequests } from "@/hooks/users/use-get-user-contact-requests";
 
 export function ContactRequests() {
-  const { data: contactRequests, isLoading } = useGetUserContactRequests({ enabled: true });
+  const { data: contactRequests, isLoading } = useGetUserContactRequests();
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -12,7 +12,7 @@ export function ContactRequests() {
   return (
     <div className="space-y-4">
       {contactRequests.map((contactRequest) => (
-        <div key={contactRequest    .id} className="p-4 border rounded-lg">
+        <div key={contactRequest.id} className="p-4 border rounded-lg">
           <div className="flex items-center gap-4">
             <div>
               <p className="font-medium">
