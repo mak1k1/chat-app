@@ -1,6 +1,7 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ContactList } from "@/components/features/contacts/contact-list";
 import { ContactRequests } from "@/components/features/contacts/contact-requests";
+import { AddContact } from "@/components/features/contacts/add-contact";
 
 export default function ContactsPage() {
   return (
@@ -13,12 +14,16 @@ export default function ContactsPage() {
         <TabsList>
           <TabsTrigger value="contacts">Contacts</TabsTrigger>
           <TabsTrigger value="contact-requests">Contact Requests</TabsTrigger>
+          <TabsTrigger value="add-contact">Add Contact</TabsTrigger>
         </TabsList>
         <TabsContent value="contacts">
           <ContactList />
         </TabsContent>
         <TabsContent value="contact-requests">
           <ContactRequests />
+        </TabsContent>
+        <TabsContent value="add-contact">
+          <AddContact />
         </TabsContent>
       </Tabs>
     </div>
