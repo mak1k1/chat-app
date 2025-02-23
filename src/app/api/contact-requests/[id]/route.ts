@@ -1,18 +1,20 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 
 export async function PATCH(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+): Promise<NextResponse> {
+  const { id } = await params;
+
   try {
     const { userId } = await auth();
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { status } = await request.json();
+    const { status } = await req.json();
     if (!status || !["ACCEPTED", "REJECTED"].includes(status)) {
       return NextResponse.json(
         { error: "Invalid status" },
@@ -23,7 +25,7 @@ export async function PATCH(
     // Verify the request exists and user is the recipient
     const contactRequest = await prisma.contactRequest.findFirst({
       where: {
-        id: params.id,
+        id,
         recipientId: userId,
         status: "PENDING",
       },
@@ -38,7 +40,7 @@ export async function PATCH(
 
     // Update the request status
     const updatedRequest = await prisma.contactRequest.update({
-      where: { id: params.id },
+      where: { id },
       data: { status },
     });
 
