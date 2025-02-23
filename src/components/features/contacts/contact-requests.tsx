@@ -1,9 +1,20 @@
 "use client";
 
 import { useGetUserContactRequests } from "@/hooks/users/use-get-user-contact-requests";
+import { ContactRequest, User } from "@prisma/client";
 
-export function ContactRequests() {
-  const { data: contactRequests, isLoading } = useGetUserContactRequests();
+interface ContactRequestWithSender extends ContactRequest {
+  sender: User;
+}
+
+interface ContactRequestsProps {
+  initialRequests: ContactRequestWithSender[];
+}
+
+export function ContactRequests({ initialRequests }: ContactRequestsProps) {
+  const { data: contactRequests, isLoading } = useGetUserContactRequests({
+    initialData: initialRequests,
+  });
 
   if (isLoading) return <div>Loading...</div>;
 

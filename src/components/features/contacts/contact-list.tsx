@@ -1,9 +1,20 @@
 "use client";
 
 import { useGetUserContacts } from "@/hooks/users/use-get-user-contacts";
+import { Contact, User } from "@prisma/client";
 
-export function ContactList() {
-  const { data: contacts, isLoading } = useGetUserContacts();
+interface ContactWithDetails extends Contact {
+  contact: User;
+}
+
+interface ContactListProps {
+  initialContacts: ContactWithDetails[];
+}
+
+export function ContactList({ initialContacts }: ContactListProps) {
+  const { data: contacts, isLoading } = useGetUserContacts({
+    initialData: initialContacts,
+  });
 
   if (isLoading) return <div>Loading...</div>;
 

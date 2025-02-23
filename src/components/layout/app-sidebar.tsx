@@ -1,9 +1,9 @@
 "use client";
 
-import { MessageSquare, Users } from "lucide-react";
+import { MessageSquare, Users, UserPlus } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -20,6 +20,12 @@ export function AppSidebar() {
       href: "/contacts",
       label: "Contacts",
       active: pathname === "/contacts"
+    },
+    {
+      icon: UserPlus,
+      href: "/contact-requests",
+      label: "Contact Requests",
+      active: pathname === "/contact-requests"
     }
   ];
 

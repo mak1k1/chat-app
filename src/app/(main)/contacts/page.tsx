@@ -1,9 +1,32 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ContactList } from "@/components/features/contacts/contact-list";
-import { ContactRequests } from "@/components/features/contacts/contact-requests";
 import { AddContact } from "@/components/features/contacts/add-contact";
+import { prisma } from "@/lib/prisma";
+import { auth } from "@clerk/nextjs/server";
 
-export default function ContactsPage() {
+async function getContacts() {
+  const { userId } = await auth();
+  if (!userId) return [];
+
+  const user = await prisma.user.findFirst({
+    where: {
+      id: userId
+    },
+    include: {
+      contacts: {
+        include: {
+          contact: true
+        }
+      }
+    }
+  });
+
+  return user?.contacts ?? [];
+}
+
+export default async function ContactsPage() {
+  const contacts = await getContacts();
+
   return (
     <div className="flex-1 space-y-4 p-4">
       <div>
@@ -13,14 +36,10 @@ export default function ContactsPage() {
       <Tabs defaultValue="contacts" className="space-y-4">
         <TabsList>
           <TabsTrigger value="contacts">Contacts</TabsTrigger>
-          <TabsTrigger value="contact-requests">Contact Requests</TabsTrigger>
           <TabsTrigger value="add-contact">Add Contact</TabsTrigger>
         </TabsList>
         <TabsContent value="contacts">
-          <ContactList />
-        </TabsContent>
-        <TabsContent value="contact-requests">
-          <ContactRequests />
+          <ContactList initialContacts={contacts} />
         </TabsContent>
         <TabsContent value="add-contact">
           <AddContact />

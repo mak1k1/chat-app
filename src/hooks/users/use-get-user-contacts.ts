@@ -1,8 +1,12 @@
 import { useQuery } from "@tanstack/react-query"
 import { userKeys } from "./query-keys"
-import { GetUserContactsResponse } from "@/types/api/users"
+import { Contact, User } from "@prisma/client"
 
-export async function getUserContacts(): Promise<GetUserContactsResponse> {
+interface ContactWithDetails extends Contact {
+  contact: User;
+}
+
+export async function getUserContacts(): Promise<ContactWithDetails[]> {
   const response = await fetch(`/api/users/contacts/`)
   const data = await response.json()
 
@@ -13,10 +17,15 @@ export async function getUserContacts(): Promise<GetUserContactsResponse> {
   return data
 }
 
-export function useGetUserContacts() {
+interface UseGetUserContactsOptions {
+  initialData?: ContactWithDetails[];
+}
+
+export function useGetUserContacts(options: UseGetUserContactsOptions = {}) {
   return useQuery({
     queryKey: userKeys.contacts(),
     queryFn: () => getUserContacts(),
+    initialData: options.initialData,
     retry: false,
   })
 }
