@@ -10,15 +10,15 @@ async function getContacts() {
 
   const user = await prisma.user.findFirst({
     where: {
-      id: userId
+      id: userId,
     },
     include: {
       contacts: {
         include: {
-          contact: true
-        }
-      }
-    }
+          contact: true,
+        },
+      },
+    },
   });
 
   return user?.contacts ?? [];
