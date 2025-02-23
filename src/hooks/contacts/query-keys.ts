@@ -5,4 +5,5 @@ export const contactKeys = {
   details: () => [...contactKeys.all, 'detail'] as const,
   detail: (id: string) => [...contactKeys.details(), id] as const,
   pending: () => [...contactKeys.all, 'pending'] as const,
+  incoming: () => [...contactKeys.all, 'incoming'] as const,
 }

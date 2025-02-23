@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useSearchUsersContacts } from "@/hooks/users/use-search-users-contacts";
 import { Contact, Prisma } from "@prisma/client";
-import Image from "next/image";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { SearchUsersContactsConfig } from "@/types/api/users";
 
 export default function NewChatPage() {
@@ -54,19 +54,16 @@ export default function NewChatPage() {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    {contact.contact.imageUrl ? (
-                      <Image
-                        src={contact.contact.imageUrl}
+                    <Avatar className="h-12 w-12">
+                      <AvatarImage 
+                        src={contact.contact.imageUrl || undefined}
                         alt={contact.contact.firstName + " " + contact.contact.lastName || ""}
-                        className="w-12 h-12 rounded-full object-cover border"
                       />
-                    ) : (
-                      <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center">
-                        <span className="text-lg font-medium text-muted-foreground">
-                          {contact.contact.firstName?.[0]?.toUpperCase() + contact.contact.lastName?.[0]?.toUpperCase()}
-                        </span>
-                      </div>
-                    )}
+                      <AvatarFallback>
+                        {contact.contact.firstName?.[0]?.toUpperCase()}
+                        {contact.contact.lastName?.[0]?.toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
                     <div className="space-y-1">
                       <p className="font-medium">{contact.contact.firstName + " " + contact.contact.lastName}</p>
                       <p className="text-sm text-muted-foreground">
