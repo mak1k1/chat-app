@@ -9,7 +9,7 @@ interface ProvidersProps {
   children: React.ReactNode;
 }
 
-export function Providers({ children }: ProvidersProps) {
+export const Providers: React.FC<ProvidersProps> = ({ children }) => {
   return (
     <QueryProvider>
       <ClerkProvider>

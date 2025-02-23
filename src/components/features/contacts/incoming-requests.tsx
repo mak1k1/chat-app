@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useGetIncomingRequests } from "@/hooks/contacts/use-get-incoming-requests";
 import { useHandleContactRequest } from "@/hooks/contacts/use-handle-contact-request";
 
-export function IncomingRequests() {
+export const IncomingRequests: React.FC = () => {
   const { data: requests, isLoading } = useGetIncomingRequests();
   const { mutate: handleRequest, isPending } = useHandleContactRequest();
 

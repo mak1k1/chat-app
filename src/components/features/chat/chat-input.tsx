@@ -1,4 +1,4 @@
-export function ChatInput() {
+export const ChatInput: React.FC = () => {
   return (
     <div className="p-4 border-t">
       <div className="flex items-center gap-2">

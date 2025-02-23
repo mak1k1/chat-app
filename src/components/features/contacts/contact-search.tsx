@@ -10,7 +10,7 @@ interface ContactSearchProps {
   isLoading?: boolean
 }
 
-export function ContactSearch({ onSearchContact, isLoading }: ContactSearchProps) {
+export const ContactSearch: React.FC<ContactSearchProps> = ({ onSearchContact, isLoading }) => {
   const [searchQuery, setSearchQuery] = useState('')
 
   const handleSubmit = (e: React.FormEvent) => {

@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useGetAvailableUsers } from "@/hooks/users/use-get-available-users";
 import { useGetPendingRequests } from "@/hooks/contacts/use-get-pending-requests";
 
-export function AddContact() {
+export const AddContact: React.FC = () => {
   const { data: users, isLoading: isLoadingUsers } = useGetAvailableUsers();
   const { data: pendingRequests, isLoading: isLoadingRequests } = useGetPendingRequests();
   const { mutate: sendRequest, isPending } = useSendContactRequest();

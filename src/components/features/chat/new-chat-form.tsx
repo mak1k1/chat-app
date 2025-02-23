@@ -8,7 +8,7 @@ import { Contact, Prisma } from "@prisma/client";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { SearchUsersContactsConfig } from "@/types/api/users";
 
-export function NewChatForm() {
+export const NewChatForm: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string | null>(null);
   const {
     data: contacts,

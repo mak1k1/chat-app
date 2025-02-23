@@ -3,15 +3,11 @@
 import { useGetUserContacts } from "@/hooks/users/use-get-user-contacts";
 import { Contact, User } from "@prisma/client";
 
-interface ContactWithDetails extends Contact {
-  contact: User;
-}
-
 interface ContactListProps {
-  initialContacts: ContactWithDetails[];
+  initialContacts: (Contact & { contact: User })[];
 }
 
-export function ContactList({ initialContacts }: ContactListProps) {
+export const ContactList: React.FC<ContactListProps> = ({ initialContacts }) => {
   const { data: contacts, isLoading } = useGetUserContacts({
     initialData: initialContacts,
   });

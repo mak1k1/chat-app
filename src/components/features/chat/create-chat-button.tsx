@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { MessageSquarePlus } from "lucide-react";
 
-export function CreateChatButton() {
+export const CreateChatButton: React.FC = () => {
   const router = useRouter();
 
   return (

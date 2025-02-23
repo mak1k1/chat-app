@@ -1,6 +1,6 @@
 import { CreateChatButton } from "./create-chat-button";
 
-export function ChatSidebar() {
+export const ChatSidebar: React.FC = () => {
   return (
     <aside className="w-80 border-r bg-muted/40">
       <CreateChatButton />

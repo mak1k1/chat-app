@@ -11,7 +11,7 @@ interface ContactRequestsProps {
   initialRequests: ContactRequestWithSender[];
 }
 
-export function ContactRequests({ initialRequests }: ContactRequestsProps) {
+export const ContactRequests: React.FC<ContactRequestsProps> = ({ initialRequests }) => {
   const { data: contactRequests, isLoading } = useGetUserContactRequests({
     initialData: initialRequests,
   });

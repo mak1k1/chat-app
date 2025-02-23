@@ -2,7 +2,7 @@ import { UserButton } from "@clerk/nextjs";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import Link from "next/link";
 
-export function Navbar() {
+export const Navbar: React.FC = () => {
   return (
     <header className="h-16 border-b flex items-center justify-between px-4">
       <h1 className="text-xl font-bold">
