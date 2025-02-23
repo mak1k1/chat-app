@@ -1,9 +1,9 @@
-import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
+import { prisma } from "@/lib/prisma";
 
 export async function PATCH(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -62,7 +62,7 @@ export async function PATCH(
   } catch (error) {
     console.error("[CONTACT_REQUEST_UPDATE]", error);
     return NextResponse.json(
-      { error: "Internal error" },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }
