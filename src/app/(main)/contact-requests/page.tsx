@@ -1,6 +1,12 @@
 import { prisma } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { ContactRequests } from "@/components/features/contacts/contact-requests";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import { userKeys } from "@/hooks/users/query-keys";
 
 async function getContactRequests() {
   const { userId } = await auth();
@@ -8,22 +14,26 @@ async function getContactRequests() {
 
   const user = await prisma.user.findFirst({
     where: {
-      id: userId
+      id: userId,
     },
     include: {
       receivedContactRequests: {
         include: {
-          sender: true
-        }
-      }
-    }
+          sender: true,
+        },
+      },
+    },
   });
 
   return user?.receivedContactRequests ?? [];
 }
 
 export default async function ContactRequestsPage() {
-  const contactRequests = await getContactRequests();
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: userKeys.contactRequests(),
+    queryFn: getContactRequests,
+  });
 
   return (
     <div className="flex-1 space-y-4 p-4">
@@ -31,7 +41,9 @@ export default async function ContactRequestsPage() {
         <h2 className="text-lg font-bold">Contact Requests</h2>
       </div>
 
-      <ContactRequests initialRequests={contactRequests} />
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <ContactRequests />
+      </HydrationBoundary>
     </div>
   );
-} 
+}

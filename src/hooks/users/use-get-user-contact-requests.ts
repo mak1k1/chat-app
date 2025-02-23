@@ -26,6 +26,7 @@ export function useGetUserContactRequests(options: UseGetUserContactRequestsOpti
     queryKey: userKeys.contactRequests(),
     queryFn: () => getUserContactRequests(),
     initialData: options.initialData,
+    staleTime: 30 * 1000,
     retry: false,
   })
 }
