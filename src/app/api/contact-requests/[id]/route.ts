@@ -35,6 +35,18 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id
       data: { status },
     })
 
+    // Verify whether the contact already exists
+    const existingContact = await prisma.contact.findFirst({
+      where: {
+        ownerId: userId,
+        contactId: contactRequest?.senderId,
+      },
+    })
+
+    if (existingContact) {
+      return NextResponse.json({ error: "Contact already exists" }, { status: 400 })
+    }
+
     // If accepted, create contacts for both users
     if (status === "ACCEPTED") {
       await prisma.contact.createMany({
