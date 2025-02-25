@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useGetIncomingRequests } from "@/hooks/contacts/use-get-incoming-requests";
-import { useHandleContactRequest } from "@/hooks/contacts/use-handle-contact-request";
+import { useHandleContactRequest } from "@/hooks/contacts/use-accept-contact-request";
 
 export const IncomingRequests: React.FC = () => {
   const { data: requests, isLoading } = useGetIncomingRequests();

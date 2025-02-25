@@ -3,18 +3,17 @@ import { contactKeys } from "./query-keys";
 import { userKeys } from "../users/query-keys";
 import { toast } from "sonner";
 
-interface HandleContactRequestInput {
+interface RejectContactRequestInput {
   requestId: string;
-  status: "ACCEPTED" | "REJECTED";
 }
 
-async function handleContactRequest({ requestId, status }: HandleContactRequestInput) {
+async function rejectContactRequest({ requestId }: RejectContactRequestInput) {
   const response = await fetch(`/api/contact-requests/${requestId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ status }),
+    body: JSON.stringify({ status: "REJECTED" }),
   });
 
   if (!response.ok) {
@@ -25,19 +24,15 @@ async function handleContactRequest({ requestId, status }: HandleContactRequestI
   return response.json();
 }
 
-export function useHandleContactRequest() {
+export function useRejectContactRequest() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: handleContactRequest,
-    onSuccess: (_, { status }) => {
+    mutationFn: rejectContactRequest,
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: contactKeys.all });
       queryClient.invalidateQueries({ queryKey: userKeys.all() });
-      toast.success(
-        status === "ACCEPTED"
-          ? "Contact request accepted"
-          : "Contact request rejected"
-      );
+      toast.success("Contact request rejected");
     },
     onError: (error: Error) => {
       toast.error(error.message);

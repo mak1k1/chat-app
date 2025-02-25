@@ -36,14 +36,18 @@ export default async function ContactRequestsPage() {
   });
 
   return (
-    <div className="flex-1 space-y-4 p-4">
-      <div>
-        <h2 className="text-lg font-bold">Contact Requests</h2>
+    <div className="flex-1">
+      <div className="border-b bg-background">
+        <div className="px-6 h-16 flex items-center">
+          <h2 className="text-lg font-semibold">Contact Requests</h2>
+        </div>
       </div>
 
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <ContactRequests />
-      </HydrationBoundary>
+      <div className="px-6 py-4 md:max-w-xl">
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <ContactRequests />
+        </HydrationBoundary>
+      </div>
     </div>
   );
 }
