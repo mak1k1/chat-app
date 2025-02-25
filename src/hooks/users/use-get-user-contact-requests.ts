@@ -3,7 +3,7 @@ import { userKeys } from "./query-keys"
 import { ContactRequest, User } from "@prisma/client"
 
 interface ContactRequestWithSender extends ContactRequest {
-  sender: User;
+  sender: User
 }
 
 export async function getUserContactRequests(): Promise<ContactRequestWithSender[]> {
@@ -18,7 +18,7 @@ export async function getUserContactRequests(): Promise<ContactRequestWithSender
 }
 
 interface UseGetUserContactRequestsOptions {
-  initialData?: ContactRequestWithSender[];
+  initialData?: ContactRequestWithSender[]
 }
 
 export function useGetUserContactRequests(options: UseGetUserContactRequestsOptions = {}) {

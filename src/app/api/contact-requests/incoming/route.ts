@@ -1,12 +1,12 @@
-import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { prisma } from "@/lib/prisma"
+import { NextResponse } from "next/server"
+import { auth } from "@clerk/nextjs/server"
 
 export async function GET() {
   try {
-    const { userId } = await auth();
+    const { userId } = await auth()
     if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     const incomingRequests = await prisma.contactRequest.findMany({
@@ -25,11 +25,11 @@ export async function GET() {
           },
         },
       },
-    });
+    })
 
-    return NextResponse.json(incomingRequests);
+    return NextResponse.json(incomingRequests)
   } catch (error) {
-    console.error("[INCOMING_REQUESTS]", error);
-    return NextResponse.json({ error: "Internal error" }, { status: 500 });
+    console.error("[INCOMING_REQUESTS]", error)
+    return NextResponse.json({ error: "Internal error" }, { status: 500 })
   }
-} 
+}

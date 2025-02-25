@@ -1,37 +1,37 @@
-"use client";
+"use client"
 
-import { MessageSquare, Users, UserPlus } from "lucide-react";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { usePathname } from "next/navigation";
+import { MessageSquare, Users, UserPlus } from "lucide-react"
+import Link from "next/link"
+import { cn } from "@/lib/utils"
+import { usePathname } from "next/navigation"
 
 export const AppSidebar: React.FC = () => {
-  const pathname = usePathname();
+  const pathname = usePathname()
 
   const items = [
     {
       icon: MessageSquare,
       href: "/",
       label: "Chats",
-      active: pathname === "/"
+      active: pathname === "/",
     },
     {
-      icon: Users, 
+      icon: Users,
       href: "/contacts",
       label: "Contacts",
-      active: pathname === "/contacts"
+      active: pathname === "/contacts",
     },
     {
       icon: UserPlus,
       href: "/contact-requests",
       label: "Contact Requests",
-      active: pathname === "/contact-requests"
-    }
-  ];
+      active: pathname === "/contact-requests",
+    },
+  ]
 
   return (
     <aside className="w-16 border-r bg-muted/40 flex flex-col items-center py-4">
-      {items.map((item) => (
+      {items.map(item => (
         <Link
           key={item.href}
           href={item.href}
@@ -45,5 +45,5 @@ export const AppSidebar: React.FC = () => {
         </Link>
       ))}
     </aside>
-  );
+  )
 }

@@ -32,16 +32,12 @@ export const ContactRequests = () => {
 
   return (
     <div className="divide-y divide-border rounded-md border mb-2">
-      {contactRequests.map((contactRequest) => (
+      {contactRequests.map(contactRequest => (
         <ContactRequestCard
           key={contactRequest.id}
           contactRequest={contactRequest}
-          onAccept={() =>
-            acceptContactRequest({ requestId: contactRequest.id })
-          }
-          onReject={() =>
-            rejectContactRequest({ requestId: contactRequest.id })
-          }
+          onAccept={() => acceptContactRequest({ requestId: contactRequest.id })}
+          onReject={() => rejectContactRequest({ requestId: contactRequest.id })}
         />
       ))}
     </div>

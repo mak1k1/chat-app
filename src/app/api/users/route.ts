@@ -1,12 +1,12 @@
-import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { prisma } from "@/lib/prisma"
+import { NextResponse } from "next/server"
+import { auth } from "@clerk/nextjs/server"
 
 export async function GET() {
   try {
-    const { userId } = await auth();
+    const { userId } = await auth()
     if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     const users = await prisma.user.findMany({
@@ -14,7 +14,7 @@ export async function GET() {
         NOT: { id: userId }, // Exclude current user
       },
       orderBy: {
-        firstName: 'asc',
+        firstName: "asc",
       },
       select: {
         id: true,
@@ -23,11 +23,11 @@ export async function GET() {
         email: true,
         imageUrl: true,
       },
-    });
+    })
 
-    return NextResponse.json(users);
+    return NextResponse.json(users)
   } catch (error) {
-    console.error("[USERS_LIST]", error);
-    return NextResponse.json({ error: "Internal error" }, { status: 500 });
+    console.error("[USERS_LIST]", error)
+    return NextResponse.json({ error: "Internal error" }, { status: 500 })
   }
-} 
+}

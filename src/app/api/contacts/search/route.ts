@@ -7,7 +7,7 @@ import { SearchContactsConfig } from "@/types/api/contacts"
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
-    const query = searchParams.get('query')
+    const query = searchParams.get("query")
 
     if (!query) {
       return NextResponse.json([], { status: 200 })
@@ -18,18 +18,17 @@ export async function GET(request: Request) {
         OR: SEARCHABLE_USER_FIELDS.map(field => ({
           [field]: {
             contains: query,
-            mode: 'insensitive'
-          }
-        }))
+            mode: "insensitive",
+          },
+        })),
       },
       include: SearchContactsConfig.include,
-      take: SearchContactsConfig.take
+      take: SearchContactsConfig.take,
     })
 
     return NextResponse.json<SearchContactsResponse>(contacts, { status: 200 })
-
   } catch (error) {
-    console.error('[CONTACTS_SEARCH]', error)
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+    console.error("[CONTACTS_SEARCH]", error)
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

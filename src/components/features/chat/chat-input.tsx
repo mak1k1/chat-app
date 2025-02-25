@@ -8,13 +8,10 @@ export const ChatInput: React.FC = () => {
           className="flex-1 px-4 py-2 rounded-md border bg-background"
           disabled
         />
-        <button
-          className="px-4 py-2 bg-primary text-primary-foreground rounded-md"
-          disabled
-        >
+        <button className="px-4 py-2 bg-primary text-primary-foreground rounded-md" disabled>
           Send
         </button>
       </div>
     </div>
-  );
-} 
+  )
+}

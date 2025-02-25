@@ -6,4 +6,4 @@ export const userKeys = {
   contactRequests: () => ["users", "contact-requests"] as const,
   contactsSearch: (query: string) => ["users", "contacts", "search", query] as const,
   available: () => ["users", "available"] as const,
-} as const; 
+} as const

@@ -1,5 +1,5 @@
-import { ChatHeader } from "@/components/features/chat/chat-header";
-import { NewChatForm } from "@/components/features/chat/new-chat-form";
+import { ChatHeader } from "@/components/features/chat/chat-header"
+import { NewChatForm } from "@/components/features/chat/new-chat-form"
 
 export default function NewChatPage() {
   return (
@@ -9,5 +9,5 @@ export default function NewChatPage() {
         <NewChatForm />
       </div>
     </div>
-  );
+  )
 }

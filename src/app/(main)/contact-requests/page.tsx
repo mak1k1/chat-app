@@ -1,16 +1,12 @@
-import { prisma } from "@/lib/prisma";
-import { auth } from "@clerk/nextjs/server";
-import { ContactRequests } from "@/components/features/contacts/contact-requests";
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from "@tanstack/react-query";
-import { userKeys } from "@/hooks/users/query-keys";
+import { prisma } from "@/lib/prisma"
+import { auth } from "@clerk/nextjs/server"
+import { ContactRequests } from "@/components/features/contacts/contact-requests"
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query"
+import { userKeys } from "@/hooks/users/query-keys"
 
 async function getContactRequests() {
-  const { userId } = await auth();
-  if (!userId) return [];
+  const { userId } = await auth()
+  if (!userId) return []
 
   const user = await prisma.user.findFirst({
     where: {
@@ -23,17 +19,17 @@ async function getContactRequests() {
         },
       },
     },
-  });
+  })
 
-  return user?.receivedContactRequests ?? [];
+  return user?.receivedContactRequests ?? []
 }
 
 export default async function ContactRequestsPage() {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
     queryKey: userKeys.contactRequests(),
     queryFn: getContactRequests,
-  });
+  })
 
   return (
     <div className="flex-1">
@@ -49,5 +45,5 @@ export default async function ContactRequestsPage() {
         </HydrationBoundary>
       </div>
     </div>
-  );
+  )
 }

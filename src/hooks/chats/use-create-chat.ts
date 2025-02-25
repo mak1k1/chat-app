@@ -1,11 +1,11 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { chatKeys } from "./query-keys";
-import { Chat } from "@prisma/client";
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { chatKeys } from "./query-keys"
+import { Chat } from "@prisma/client"
 
 interface CreateChatData {
-  userIds: string[];
-  isGroup?: boolean;
-  name?: string;
+  userIds: string[]
+  isGroup?: boolean
+  name?: string
 }
 
 async function createChat(data: CreateChatData): Promise<Chat> {
@@ -13,25 +13,25 @@ async function createChat(data: CreateChatData): Promise<Chat> {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
-  });
-  
-  const responseData = await response.json();
+  })
+
+  const responseData = await response.json()
 
   if (!response.ok) {
-    throw new Error(responseData.error || "Failed to create chat");
+    throw new Error(responseData.error || "Failed to create chat")
   }
 
-  return responseData;
+  return responseData
 }
 
 export function useCreateChat() {
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: createChat,
-    onSuccess: (newChat) => {
-      queryClient.invalidateQueries({ queryKey: chatKeys.all() });
-      queryClient.setQueryData(chatKeys.detail(newChat.id), newChat);
+    onSuccess: newChat => {
+      queryClient.invalidateQueries({ queryKey: chatKeys.all() })
+      queryClient.setQueryData(chatKeys.detail(newChat.id), newChat)
     },
-  });
-} 
+  })
+}

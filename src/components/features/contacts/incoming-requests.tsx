@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useGetIncomingRequests } from "@/hooks/contacts/use-get-incoming-requests";
-import { useHandleContactRequest } from "@/hooks/contacts/use-accept-contact-request";
+import { Button } from "@/components/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useGetIncomingRequests } from "@/hooks/contacts/use-get-incoming-requests"
+import { useHandleContactRequest } from "@/hooks/contacts/use-accept-contact-request"
 
 export const IncomingRequests: React.FC = () => {
-  const { data: requests, isLoading } = useGetIncomingRequests();
-  const { mutate: handleRequest, isPending } = useHandleContactRequest();
+  const { data: requests, isLoading } = useGetIncomingRequests()
+  const { mutate: handleRequest, isPending } = useHandleContactRequest()
 
   return (
     <div className="space-y-4">
@@ -31,12 +31,10 @@ export const IncomingRequests: React.FC = () => {
           ))}
         </div>
       ) : !requests?.length ? (
-        <div className="text-center p-4 text-muted-foreground">
-          No pending requests
-        </div>
+        <div className="text-center p-4 text-muted-foreground">No pending requests</div>
       ) : (
         <div className="grid gap-4">
-          {requests.map((request) => (
+          {requests.map(request => (
             <div key={request.id} className="flex items-center justify-between p-4 border rounded-lg">
               <div className="flex items-center gap-3">
                 <Avatar>
@@ -50,25 +48,19 @@ export const IncomingRequests: React.FC = () => {
                   <p className="font-medium">
                     {request.sender.firstName} {request.sender.lastName}
                   </p>
-                  <p className="text-sm text-muted-foreground">
-                    {request.sender.email}
-                  </p>
+                  <p className="text-sm text-muted-foreground">{request.sender.email}</p>
                 </div>
               </div>
               <div className="flex gap-2">
                 <Button
-                  onClick={() =>
-                    handleRequest({ requestId: request.id, status: "ACCEPTED" })
-                  }
+                  onClick={() => handleRequest({ requestId: request.id, status: "ACCEPTED" })}
                   disabled={isPending}
                   size="sm"
                 >
                   Accept
                 </Button>
                 <Button
-                  onClick={() =>
-                    handleRequest({ requestId: request.id, status: "REJECTED" })
-                  }
+                  onClick={() => handleRequest({ requestId: request.id, status: "REJECTED" })}
                   disabled={isPending}
                   variant="outline"
                   size="sm"
@@ -81,5 +73,5 @@ export const IncomingRequests: React.FC = () => {
         </div>
       )}
     </div>
-  );
-} 
+  )
+}

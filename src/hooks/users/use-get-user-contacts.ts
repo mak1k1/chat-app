@@ -14,7 +14,7 @@ export async function getUserContacts(): Promise<(Contact & { contact: User })[]
 }
 
 interface UseGetUserContactsOptions {
-  initialData?: (Contact & { contact: User })[];
+  initialData?: (Contact & { contact: User })[]
 }
 
 export function useGetUserContacts(options: UseGetUserContactsOptions = {}) {

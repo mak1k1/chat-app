@@ -1,6 +1,6 @@
-import { UserButton } from "@clerk/nextjs";
-import { ModeToggle } from "@/components/ui/mode-toggle";
-import Link from "next/link";
+import { UserButton } from "@clerk/nextjs"
+import { ModeToggle } from "@/components/ui/mode-toggle"
+import Link from "next/link"
 
 export const Navbar: React.FC = () => {
   return (
@@ -13,5 +13,5 @@ export const Navbar: React.FC = () => {
         <UserButton signInUrl="/sign-in" />
       </div>
     </header>
-  );
-} 
+  )
+}

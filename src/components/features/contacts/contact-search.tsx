@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Search, Loader2 } from 'lucide-react'
+import { useState } from "react"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Search, Loader2 } from "lucide-react"
 
 interface ContactSearchProps {
   onSearchContact: (phoneNumber: string) => void
@@ -11,7 +11,7 @@ interface ContactSearchProps {
 }
 
 export const ContactSearch: React.FC<ContactSearchProps> = ({ onSearchContact, isLoading }) => {
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useState("")
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -32,14 +32,10 @@ export const ContactSearch: React.FC<ContactSearchProps> = ({ onSearchContact, i
           disabled={isLoading}
         />
         <Button type="submit" disabled={isLoading}>
-          {isLoading ? (
-            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-          ) : (
-            <Search className="h-4 w-4 mr-2" />
-          )}
+          {isLoading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Search className="h-4 w-4 mr-2" />}
           Search
         </Button>
       </div>
     </form>
   )
-} 
+}

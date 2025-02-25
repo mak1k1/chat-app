@@ -25,4 +25,4 @@ export function useSearchUsers({ phoneNumber, enabled = true }: SearchUsersOptio
     enabled: enabled && !!phoneNumber,
     retry: false,
   })
-} 
+}

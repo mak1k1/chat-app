@@ -1,12 +1,12 @@
-import { prisma } from "@/lib/prisma";
-import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
+import { prisma } from "@/lib/prisma"
+import { NextResponse } from "next/server"
+import { auth } from "@clerk/nextjs/server"
 
 export async function GET() {
   try {
-    const { userId } = await auth();
+    const { userId } = await auth()
     if (!userId) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     // Get all users except:
@@ -18,22 +18,19 @@ export async function GET() {
           { NOT: { id: userId } },
           {
             NOT: {
-              OR: [
-                { contacts: { some: { contactId: userId } } },
-                { contactOf: { some: { ownerId: userId } } },
-              ],
+              OR: [{ contacts: { some: { contactId: userId } } }, { contactOf: { some: { ownerId: userId } } }],
             },
           },
         ],
       },
       orderBy: {
-        firstName: 'asc',
+        firstName: "asc",
       },
-    });
+    })
 
-    return NextResponse.json(availableUsers);
+    return NextResponse.json(availableUsers)
   } catch (error) {
-    console.error("[AVAILABLE_USERS]", error);
-    return NextResponse.json({ error: "Internal error" }, { status: 500 });
+    console.error("[AVAILABLE_USERS]", error)
+    return NextResponse.json({ error: "Internal error" }, { status: 500 })
   }
-} 
+}

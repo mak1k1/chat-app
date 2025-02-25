@@ -18,10 +18,9 @@ export default function ChatPage() {
         </div>
         <p className="text-2xl font-semibold">Welcome to Chat App</p>
         <p className="text-muted-foreground text-sm max-w-sm mx-auto">
-          Select an existing conversation from the sidebar or start a new one to
-          begin messaging
+          Select an existing conversation from the sidebar or start a new one to begin messaging
         </p>
       </div>
     </div>
-  );
+  )
 }

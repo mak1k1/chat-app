@@ -1,4 +1,4 @@
-import { CreateChatButton } from "./create-chat-button";
+import { CreateChatButton } from "./create-chat-button"
 
 export const ChatSidebar: React.FC = () => {
   return (
@@ -11,5 +11,5 @@ export const ChatSidebar: React.FC = () => {
         <p className="text-sm text-muted-foreground p-2">No chats available</p>
       </nav>
     </aside>
-  );
-};
+  )
+}

@@ -7,9 +7,7 @@ interface AcceptContactRequestInput {
   requestId: string
 }
 
-const acceptContactRequest = async ({
-  requestId,
-}: AcceptContactRequestInput) => {
+const acceptContactRequest = async ({ requestId }: AcceptContactRequestInput) => {
   const response = await fetch(`/api/contact-requests/${requestId}`, {
     method: "PATCH",
     headers: {
