@@ -8,20 +8,17 @@ async function getContactRequests() {
   const { userId } = await auth()
   if (!userId) return []
 
-  const user = await prisma.user.findFirst({
+  const pendingRequests = await prisma.contactRequest.findMany({
     where: {
-      id: userId,
+      recipientId: userId,
+      status: "PENDING",
     },
     include: {
-      receivedContactRequests: {
-        include: {
-          sender: true,
-        },
-      },
+      sender: true,
     },
   })
 
-  return user?.receivedContactRequests ?? []
+  return pendingRequests
 }
 
 export default async function ContactRequestsPage() {
