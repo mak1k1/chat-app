@@ -52,7 +52,7 @@ model Chat {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Group     Group[]
+  group     Group?
 }
 
 model ChatMember {
@@ -101,7 +101,7 @@ model Group {
   id        String        @id @default(uuid())
   name      String
   imageUrl  String?       @db.Text
-  chatId    String
+  chatId    String        @unique
   chat      Chat          @relation(fields: [chatId], references: [id], onDelete: Cascade)
   members   GroupMember[]
   createdAt DateTime      @default(now())
