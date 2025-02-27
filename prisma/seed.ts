@@ -55,7 +55,6 @@ async function main() {
   await prisma.$transaction([
     prisma.readReceipt.deleteMany(),
     prisma.message.deleteMany(),
-    prisma.groupMember.deleteMany(),
     prisma.group.deleteMany(),
     prisma.chatMember.deleteMany(),
     prisma.chat.deleteMany(),
