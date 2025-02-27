@@ -23,7 +23,7 @@ export const NewChatForm: React.FC = () => {
     setSearchQuery(query)
   }
 
-  const handleCreateChat = (user: Contact) => {
+  const handleCreateChat = async (user: Contact) => {
     console.log(user)
   }
 

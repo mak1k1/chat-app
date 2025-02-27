@@ -6,8 +6,8 @@ import { randomBytes } from 'crypto'
 import * as fs from 'fs/promises'
 import * as path from 'path'
 
-// Load environment variables from .env.local
-config({ path: '.env.local' })
+// Load environment variables from .env
+config()
 
 const prisma = new PrismaClient()
 const clerk = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY })
