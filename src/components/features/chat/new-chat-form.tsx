@@ -7,9 +7,14 @@ import { useSearchUsersContacts } from "@/hooks/users/use-search-users-contacts"
 import { Contact, Prisma } from "@prisma/client"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { SearchUsersContactsConfig } from "@/types/api/users"
+import { useCreateChat } from "@/hooks/chats/use-create-chat"
+import { useUser } from "@clerk/nextjs"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 export const NewChatForm: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string | null>(null)
+  const router = useRouter()
   const {
     data: contacts,
     isLoading,
@@ -18,13 +23,30 @@ export const NewChatForm: React.FC = () => {
     searchQuery: searchQuery ?? "",
     enabled: !!searchQuery,
   })
+  const { mutate: createChat, isPending } = useCreateChat()
+  const { user: loggedUser } = useUser()
 
   const handleSearchContact = (query: string) => {
     setSearchQuery(query)
   }
 
   const handleCreateChat = async (user: Contact) => {
-    console.log(user)
+
+    createChat(
+      {
+        userIds: [user.contactId, loggedUser!.id],
+      },
+      {
+        onSuccess: chat => {
+          toast.success("Chat created successfully")
+          router.push(`/chat/${chat.id}`)
+        },
+        onError: error => {
+          toast.error("Failed to create chat " + error.message)
+          console.error(error)
+        },
+      },
+    )
   }
 
   return (
@@ -57,8 +79,12 @@ export const NewChatForm: React.FC = () => {
                   <p className="text-sm text-muted-foreground">{contact.contact.phone}</p>
                 </div>
               </div>
-              <Button onClick={() => handleCreateChat(contact)} className="ml-4">
-                Start Chat
+              <Button
+                onClick={() => handleCreateChat(contact)}
+                disabled={isPending}
+                className="ml-4"
+              >
+                {isPending ? "Starting..." : "Start Chat"}
               </Button>
             </div>
           </div>

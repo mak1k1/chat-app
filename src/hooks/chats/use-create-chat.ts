@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { chatKeys } from "./query-keys"
 import { Chat } from "@prisma/client"
 
-interface CreateChatData {
+export interface CreateChatData {
   userIds: string[]
   isGroup?: boolean
   name?: string

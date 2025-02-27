@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { chatKeys } from "./query-keys"
 import { Message } from "@prisma/client"
-import { useChatStore } from "@/store/chat-store"
 
 const getChatMessages = async (chatId: string): Promise<Message[]> => {
   try {
@@ -20,19 +19,10 @@ const getChatMessages = async (chatId: string): Promise<Message[]> => {
 }
 
 export const useChatMessages = (chatId: string) => {
-  // Set this chat as active in UI state
-  const setActiveChatId = useChatStore(state => state.setActiveChatId)
-  
-  // When this hook is called, set this chat as active
-  if (chatId) {
-    setActiveChatId(chatId)
-  }
-
-  // Fetch messages with React Query - this is our source of truth for server data
   return useQuery({
     queryKey: chatKeys.messages(chatId),
     queryFn: () => getChatMessages(chatId),
-    staleTime: Infinity, // Don't refetch automatically since we'll update via socket
+    staleTime: Infinity,
     enabled: !!chatId,
   })
 } 

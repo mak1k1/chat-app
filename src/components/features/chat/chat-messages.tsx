@@ -1,3 +1,5 @@
+"use client"
+
 import { useChatMessages } from "@/hooks/chats/use-messages"
 import { Skeleton } from "@/components/ui/skeleton"
 interface ChatMessagesProps {
