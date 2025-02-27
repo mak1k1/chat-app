@@ -11,7 +11,7 @@ export default async function ChatDetailPage({ params }: { params: Promise<ChatD
   return (
     <div className="flex-1 flex flex-col">
       <ChatHeader title={chatId} />
-      <ChatMessages />
+      <ChatMessages chatId={chatId} />
       <ChatInput />
     </div>
   )
