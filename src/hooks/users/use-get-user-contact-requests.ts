@@ -8,6 +8,7 @@ interface ContactRequestWithSender extends ContactRequest {
 
 export async function getUserContactRequests(): Promise<ContactRequestWithSender[]> {
   const response = await fetch(`/api/users/received-contact-requests`)
+
   const data = await response.json()
 
   if (!response.ok) {
@@ -26,7 +27,6 @@ export function useGetUserContactRequests(options: UseGetUserContactRequestsOpti
     queryKey: userKeys.contactRequests(),
     queryFn: () => getUserContactRequests(),
     initialData: options.initialData,
-    staleTime: 30 * 1000,
     retry: false,
   })
 }

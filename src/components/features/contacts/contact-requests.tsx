@@ -5,6 +5,7 @@ import { ContactRequestCard } from "./contact-request-card"
 import { Bell } from "lucide-react"
 import { useAcceptContactRequest } from "@/hooks/contacts/use-accept-contact-request"
 import { useRejectContactRequest } from "@/hooks/contacts/use-reject-contact-request"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export const ContactRequests = () => {
   const { data: contactRequests, isLoading } = useGetUserContactRequests()
@@ -14,7 +15,9 @@ export const ContactRequests = () => {
   if (isLoading) {
     return (
       <div className="p-4">
-        <div className="animate-spin rounded-full h-6 w-6 border-2 border-primary" />
+        <Skeleton className="h-16 w-full mb-2" />
+        <Skeleton className="h-16 w-full mb-2" />
+        <Skeleton className="h-16 w-full mb-2" />
       </div>
     )
   }
@@ -31,7 +34,7 @@ export const ContactRequests = () => {
   }
 
   return (
-    <div className="divide-y divide-border rounded-md border mb-2">
+    <div className="p-4">
       {contactRequests.map(contactRequest => (
         <ContactRequestCard
           key={contactRequest.id}
