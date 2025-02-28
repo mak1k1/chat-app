@@ -54,6 +54,9 @@
     "seed": "ts-node --project prisma/tsconfig.seed.json prisma/seed.ts"
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix"
+    "*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   }
 }
