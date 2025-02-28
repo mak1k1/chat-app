@@ -2,7 +2,6 @@ import { auth } from "@clerk/nextjs/server"
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 
-
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const { userId } = await auth()
@@ -28,7 +27,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
     if (!chat) {
       return NextResponse.json({ error: "Chat not found" }, { status: 404 })
     }
-    
+
     const isMember = chat.users.some(user => user.userId === userId)
 
     if (!isMember) {
@@ -36,7 +35,6 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
     }
 
     return NextResponse.json(chat.messages)
-
   } catch (error) {
     console.error("[GET_CHAT_MESSAGES]", error)
     return NextResponse.json({ error: "Internal error" }, { status: 500 })

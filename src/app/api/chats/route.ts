@@ -10,7 +10,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    const { userIds, isGroup, name } = await request.json() as CreateChatData
+    const { userIds, isGroup, name } = (await request.json()) as CreateChatData
 
     if (!userIds || !userIds.length) {
       return NextResponse.json({ error: "User IDs required" }, { status: 400 })
@@ -24,9 +24,9 @@ export async function POST(request: Request) {
     const users = await prisma.user.findMany({
       where: {
         id: {
-          in: userIds
+          in: userIds,
         },
-      }
+      },
     })
 
     if (users.length !== userIds.length) {
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
     // For direct messages, check if a chat already exists
     if (!isGroup && userIds.length === 2) {
       const [user1Id, user2Id] = [...userIds].sort()
-      
+
       const existingChats = await prisma.$queryRaw<{ id: string }[]>`
         SELECT c.id 
         FROM "Chat" c
@@ -59,21 +59,23 @@ export async function POST(request: Request) {
         users: {
           create: userIds.map(id => ({
             userId: id,
-            isAdmin: id === loggedUserId 
-          }))
+            isAdmin: id === loggedUserId,
+          })),
         },
-        ...(isGroup && name ? {
-          group: {
-            create: {
-              name,
-              imageUrl: null
+        ...(isGroup && name
+          ? {
+              group: {
+                create: {
+                  name,
+                  imageUrl: null,
+                },
+              },
             }
-          }
-        } : {})
+          : {}),
       },
       select: {
-        id: true
-      }
+        id: true,
+      },
     })
 
     return NextResponse.json(chat)

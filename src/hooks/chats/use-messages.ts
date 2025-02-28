@@ -10,7 +10,7 @@ const getChatMessages = async (chatId: string): Promise<Message[]> => {
       const error = await response.json()
       throw new Error(error.error || "Failed to handle request")
     }
-  
+
     return response.json()
   } catch (error) {
     console.error(error)
@@ -25,4 +25,4 @@ export const useChatMessages = (chatId: string) => {
     staleTime: Infinity,
     enabled: !!chatId,
   })
-} 
+}

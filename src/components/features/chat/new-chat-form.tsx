@@ -31,7 +31,6 @@ export const NewChatForm: React.FC = () => {
   }
 
   const handleCreateChat = async (user: Contact) => {
-
     createChat(
       {
         userIds: [user.contactId, loggedUser!.id],
@@ -45,7 +44,7 @@ export const NewChatForm: React.FC = () => {
           toast.error("Failed to create chat " + error.message)
           console.error(error)
         },
-      },
+      }
     )
   }
 
@@ -79,11 +78,7 @@ export const NewChatForm: React.FC = () => {
                   <p className="text-sm text-muted-foreground">{contact.contact.phone}</p>
                 </div>
               </div>
-              <Button
-                onClick={() => handleCreateChat(contact)}
-                disabled={isPending}
-                className="ml-4"
-              >
+              <Button onClick={() => handleCreateChat(contact)} disabled={isPending} className="ml-4">
                 {isPending ? "Starting..." : "Start Chat"}
               </Button>
             </div>

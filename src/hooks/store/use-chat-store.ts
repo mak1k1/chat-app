@@ -18,4 +18,4 @@ export const useActiveChatId = () => {
 // Hook to check if a chat is active
 export const useIsChatActive = (chatId: string) => {
   return useChatStore(state => state.activeChatId === chatId)
-} 
+}

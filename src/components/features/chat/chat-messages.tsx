@@ -20,10 +20,6 @@ export const ChatMessages: React.FC<ChatMessagesProps> = ({ chatId }) => {
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      {messages?.map(message => (
-        <p key={message.id}>{message.content}</p>
-      ))}
-    </div>
+    <div className="flex flex-col gap-4">{messages?.map(message => <p key={message.id}>{message.content}</p>)}</div>
   )
 }

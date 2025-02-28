@@ -56,17 +56,17 @@ export const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
   return (
     <div className="p-4 border-t">
       <div className="flex items-center gap-2">
-          <Textarea
-            value={draftMessage}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-            placeholder="Type a message..."
-            className="flex-1 min-h-[44px] max-h-32 resize-none"
-            rows={1}
-          />
-          <Button onClick={handleSendMessage} disabled={!draftMessage.trim() ? true : undefined} size="icon">
-            <Send className="h-4 w-4" />
-          </Button>
+        <Textarea
+          value={draftMessage}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          placeholder="Type a message..."
+          className="flex-1 min-h-[44px] max-h-32 resize-none"
+          rows={1}
+        />
+        <Button onClick={handleSendMessage} disabled={!draftMessage.trim() ? true : undefined} size="icon">
+          <Send className="h-4 w-4" />
+        </Button>
       </div>
     </div>
   )

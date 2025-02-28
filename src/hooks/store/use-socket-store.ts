@@ -10,6 +10,6 @@ export const useSocket = () => {
     socket,
     isConnected,
     connect,
-    disconnect
+    disconnect,
   }
-} 
+}

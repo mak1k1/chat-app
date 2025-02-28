@@ -2,9 +2,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { ContactList } from "@/components/features/contacts/contact-list"
 import { AddContact } from "@/components/features/contacts/add-contact"
 
-
 export default async function ContactsPage() {
-
   return (
     <div className="flex-1 space-y-4 p-4">
       <div>
