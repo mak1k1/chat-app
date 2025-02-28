@@ -1,4 +1,5 @@
 import { ChatSidebar } from "@/components/features/chat/chat-sidebar"
+import { SocketProvider } from "@/components/providers/socket-provider"
 
 interface ChatLayoutProps {
   children: React.ReactNode
@@ -6,9 +7,11 @@ interface ChatLayoutProps {
 
 export default function ChatLayout({ children }: ChatLayoutProps) {
   return (
-    <div className="flex flex-1 overflow-hidden">
-      <ChatSidebar />
-      <main className="flex-1 flex flex-col">{children}</main>
-    </div>
+    <SocketProvider>
+      <div className="flex flex-1 overflow-hidden">
+        <ChatSidebar />
+        <main className="flex-1 flex flex-col">{children}</main>
+      </div>
+    </SocketProvider>
   )
 }

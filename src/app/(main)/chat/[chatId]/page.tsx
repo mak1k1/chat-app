@@ -10,9 +10,9 @@ export default async function ChatDetailPage({ params }: { params: Promise<ChatD
   const { chatId } = await params
   return (
     <div className="flex-1 flex flex-col">
-      <ChatHeader title={chatId} />
+      <ChatHeader chatId={chatId} />
       <ChatMessages chatId={chatId} />
-      <ChatInput />
+      <ChatInput chatId={chatId} />
     </div>
   )
 }

@@ -2,7 +2,7 @@
 
 import { useSocketStore } from "@/store/socket-store"
 import { useAuth } from "@clerk/nextjs"
-import { PropsWithChildren } from "react"
+import { PropsWithChildren, useEffect } from "react"
 import { useSocketMessageHandler } from "@/hooks/socket/use-socket-message-handler"
 
 export const SocketProvider: React.FC<PropsWithChildren> = ({ children }) => {
@@ -11,7 +11,7 @@ export const SocketProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   useSocketMessageHandler()
 
-  if (typeof window !== "undefined") {
+  useEffect(() => {
     const initializeSocket = (() => {
       let initialized = false
       return () => {
@@ -30,7 +30,7 @@ export const SocketProvider: React.FC<PropsWithChildren> = ({ children }) => {
     })()
 
     initializeSocket()
-  }
+  }, [getToken, connect, disconnect])
 
   return <>{children}</>
 }

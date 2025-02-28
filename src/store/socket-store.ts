@@ -17,9 +17,10 @@ export const useSocketStore = create<SocketStore>((set) => ({
         if (!WEBSOCKET_URL) {
             throw new Error("WEBSOCKET_URL is not defined")
         }
+
         const socket = io(WEBSOCKET_URL, {
             auth: {
-                token: token
+                token
             }
         })
 
