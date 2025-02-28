@@ -1,31 +1,9 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { ContactList } from "@/components/features/contacts/contact-list"
 import { AddContact } from "@/components/features/contacts/add-contact"
-import { prisma } from "@/lib/prisma"
-import { auth } from "@clerk/nextjs/server"
 
-async function getContacts() {
-  const { userId } = await auth()
-  if (!userId) return []
-
-  const user = await prisma.user.findFirst({
-    where: {
-      id: userId,
-    },
-    include: {
-      contacts: {
-        include: {
-          contact: true,
-        },
-      },
-    },
-  })
-
-  return user?.contacts ?? []
-}
 
 export default async function ContactsPage() {
-  const contacts = await getContacts()
 
   return (
     <div className="flex-1 space-y-4 p-4">
@@ -39,7 +17,7 @@ export default async function ContactsPage() {
           <TabsTrigger value="add-contact">Add Contact</TabsTrigger>
         </TabsList>
         <TabsContent value="contacts">
-          <ContactList initialContacts={contacts} />
+          <ContactList />
         </TabsContent>
         <TabsContent value="add-contact">
           <AddContact />
