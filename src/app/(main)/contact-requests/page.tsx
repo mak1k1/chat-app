@@ -1,4 +1,4 @@
-import { ContactRequests } from "@/components/features/contacts/contact-requests"
+import { ContactRequests } from "@/components/features/contact-requests/contact-requests"
 
 export default async function ContactRequestsPage() {
   return (
@@ -10,7 +10,7 @@ export default async function ContactRequestsPage() {
       </div>
 
       <div className="px-6 py-4 md:max-w-xl">
-          <ContactRequests />
+        <ContactRequests />
       </div>
     </div>
   )
