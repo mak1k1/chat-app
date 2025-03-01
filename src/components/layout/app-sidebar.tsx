@@ -11,9 +11,9 @@ export const AppSidebar: React.FC = () => {
   const items = [
     {
       icon: MessageSquare,
-      href: "/",
+      href: "/chat",
       label: "Chats",
-      active: pathname === "/",
+      active: pathname === "/chat",
     },
     {
       icon: Users,
