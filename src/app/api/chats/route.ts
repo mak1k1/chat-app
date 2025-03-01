@@ -3,6 +3,53 @@ import { NextResponse } from "next/server"
 import { auth } from "@clerk/nextjs/server"
 import { CreateChatData } from "@/hooks/chats/use-create-chat"
 
+export async function GET() {
+  try {
+    const { userId: loggedUserId } = await auth()
+    if (!loggedUserId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    }
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: loggedUserId,
+      },
+      include: {
+        chats: {
+          select: {
+            chat: {
+              include: {
+                users: {
+                  include: {
+                    user: true,
+                  },
+                },
+                group: {
+                  select: {
+                    id: true,
+                    name: true,
+                    imageUrl: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    })
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 })
+    }
+
+    const chats = user.chats.map(({ chat }) => chat)
+    return NextResponse.json(chats)
+  } catch (error) {
+    console.error("[CHAT_GET]", error)
+    return NextResponse.json({ error: "Internal error" }, { status: 500 })
+  }
+}
+
 export async function POST(request: Request) {
   try {
     const { userId: loggedUserId } = await auth()

@@ -1,3 +1,4 @@
+import { ChatList } from "./chat-list"
 import { CreateChatButton } from "./create-chat-button"
 
 export const ChatSidebar: React.FC = () => {
@@ -8,7 +9,7 @@ export const ChatSidebar: React.FC = () => {
         <CreateChatButton />
       </div>
       <nav className="flex-1 overflow-y-auto p-2">
-        <p className="text-sm text-muted-foreground p-2">No chats available</p>
+        <ChatList />
       </nav>
     </aside>
   )
