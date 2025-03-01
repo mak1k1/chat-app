@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { User } from "@prisma/client"
+import { UserAvatar } from "@/components/shared/user-avatar"
 
 interface AddContactCardProps {
   user: User
@@ -11,15 +11,11 @@ interface AddContactCardProps {
 
 export const AddContactCard: React.FC<AddContactCardProps> = ({ user, isPending, isPendingRequest, onAdd }) => {
   const fullName = `${user.firstName} ${user.lastName}`
-  const initials = `${user.firstName[0]}${user.lastName[0]}`
 
   return (
     <div className="flex items-center justify-between p-4 border rounded-lg">
       <div className="flex items-center gap-3">
-        <Avatar>
-          <AvatarImage src={user.imageUrl || undefined} alt={fullName} />
-          <AvatarFallback>{initials}</AvatarFallback>
-        </Avatar>
+        <UserAvatar user={user} />
         <div>
           <p className="font-medium">{fullName}</p>
           <p className="text-sm text-muted-foreground">{user.email}</p>

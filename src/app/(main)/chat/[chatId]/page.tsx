@@ -9,7 +9,7 @@ interface ChatDetailPageProps {
 export default async function ChatDetailPage({ params }: { params: Promise<ChatDetailPageProps> }) {
   const { chatId } = await params
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="flex-1 flex flex-col overflow-hidden">
       <ChatHeader chatId={chatId} />
       <ChatMessages chatId={chatId} />
       <ChatInput chatId={chatId} />

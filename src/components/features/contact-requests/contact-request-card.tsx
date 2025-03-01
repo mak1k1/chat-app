@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Check, X } from "lucide-react"
 import { ContactRequest, User } from "@prisma/client"
+import { UserAvatar } from "@/components/shared/user-avatar"
 
 interface ContactRequestWithSender extends ContactRequest {
   sender: User
@@ -16,14 +16,10 @@ interface ContactRequestCardProps {
 export const ContactRequestCard: React.FC<ContactRequestCardProps> = ({ contactRequest, onAccept, onReject }) => {
   const { sender } = contactRequest
   const fullName = `${sender.firstName} ${sender.lastName}`
-  const initials = `${sender.firstName[0]}${sender.lastName[0]}`
 
   return (
     <div className="border rounded-md flex items-center gap-3 p-3 h-16">
-      <Avatar>
-        <AvatarImage src={sender.imageUrl || undefined} alt={fullName} />
-        <AvatarFallback>{initials}</AvatarFallback>
-      </Avatar>
+      <UserAvatar user={sender} />
 
       <div className="flex-1 min-w-0">
         <p className="font-medium truncate">{fullName}</p>

@@ -13,37 +13,39 @@ export const AppSidebar: React.FC = () => {
       icon: MessageSquare,
       href: "/chat",
       label: "Chats",
-      active: pathname === "/chat",
+      active: pathname === "/chat" || pathname.startsWith("/chat/"),
     },
     {
       icon: Users,
       href: "/contacts",
       label: "Contacts",
-      active: pathname === "/contacts",
+      active: pathname === "/contacts" || pathname.startsWith("/contacts/"),
     },
     {
       icon: UserPlus,
       href: "/contact-requests",
       label: "Contact Requests",
-      active: pathname === "/contact-requests",
+      active: pathname === "/contact-requests" || pathname.startsWith("/contact-requests/"),
     },
   ]
 
   return (
-    <aside className="w-16 border-r bg-muted/40 flex flex-col items-center py-4">
-      {items.map(item => (
-        <Link
-          key={item.href}
-          href={item.href}
-          className={cn(
-            "w-10 h-10 flex items-center justify-center rounded-lg mb-2 hover:bg-accent/50 transition-colors",
-            item.active && "bg-accent"
-          )}
-          title={item.label}
-        >
-          <item.icon className="w-5 h-5" />
-        </Link>
-      ))}
+    <aside className="w-16 border-r bg-muted/40 flex-shrink-0">
+      <nav className="flex flex-col items-center py-4">
+        {items.map(item => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={cn(
+              "w-10 h-10 flex items-center justify-center rounded-lg mb-2 hover:bg-accent/50 transition-colors",
+              item.active && "bg-accent"
+            )}
+            title={item.label}
+          >
+            <item.icon className="w-5 h-5" />
+          </Link>
+        ))}
+      </nav>
     </aside>
   )
 }
