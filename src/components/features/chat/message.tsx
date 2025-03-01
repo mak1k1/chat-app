@@ -18,7 +18,7 @@ export const Message: React.FC<MessageProps> = ({ message, sender }) => {
     <div className="mb-2">
       <div className={cn("flex", isSender ? "justify-end" : "justify-start")}>
         <div className={cn("flex items-end gap-1.5", isSender ? "flex-row-reverse" : "flex-row")}>
-          {isSender && <UserAvatar user={sender} className="h-6 w-6 flex-shrink-0" />}
+          {!isSender && <UserAvatar user={sender} className="h-6 w-6 flex-shrink-0" />}
 
           <div
             className={cn(
