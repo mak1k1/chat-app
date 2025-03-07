@@ -2,26 +2,21 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { contactKeys } from "./query-keys"
 import { userKeys } from "../users/query-keys"
 import { toast } from "sonner"
+import { fetchApi } from "@/lib/fetch"
+import { ContactRequest } from "@prisma/client"
 
 interface AcceptContactRequestInput {
   requestId: string
 }
 
 const acceptContactRequest = async ({ requestId }: AcceptContactRequestInput) => {
-  const response = await fetch(`/api/contact-requests/${requestId}`, {
+  return fetchApi<ContactRequest>(`/api/contact-requests/${requestId}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ status: "ACCEPTED" }),
   })
-
-  if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.error || "Failed to handle request")
-  }
-
-  return response.json()
 }
 
 export const useAcceptContactRequest = () => {

@@ -1,21 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
 import { chatKeys } from "./query-keys"
 import { ChatWithUsers } from "@/types/api/chats"
+import { fetchApi } from "@/lib/fetch"
 
 const getChat = async (chatId: string): Promise<ChatWithUsers> => {
-  try {
-    const response = await fetch(`/api/chats/${chatId}`)
-
-    if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.error || "Failed to handle request")
-    }
-
-    return response.json()
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
+  return fetchApi<ChatWithUsers>(`/api/chats/${chatId}`, {}, "Failed to fetch chat details")
 }
 
 export const useGetChat = (chatId: string) => {
@@ -23,5 +12,6 @@ export const useGetChat = (chatId: string) => {
     queryKey: chatKeys.detail(chatId),
     queryFn: () => getChat(chatId),
     staleTime: Infinity,
+    enabled: !!chatId,
   })
 }

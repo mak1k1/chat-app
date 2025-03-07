@@ -1,21 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
 import { chatKeys } from "./query-keys"
 import { Message } from "@prisma/client"
+import { fetchApi } from "@/lib/fetch"
 
 const getChatMessages = async (chatId: string): Promise<Message[]> => {
-  try {
-    const response = await fetch(`/api/chats/${chatId}/messages`)
-
-    if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.error || "Failed to handle request")
-    }
-
-    return response.json()
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
+  return fetchApi<Message[]>(`/api/chats/${chatId}/messages`, {}, "Failed to fetch messages")
 }
 
 export const useChatMessages = (chatId: string) => {

@@ -1,14 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
 import { userKeys } from "./query-keys"
 import { User } from "@prisma/client"
+import { fetchApi } from "@/lib/fetch"
 
-async function getAvailableUsers() {
-  const res = await fetch("/api/users/available")
-  if (!res.ok) throw new Error("Failed to fetch available users")
-  return res.json() as Promise<User[]>
+const getAvailableUsers = async () => {
+  return fetchApi<User[]>(`/api/users/available`, {}, "Failed to fetch available users")
 }
 
-export function useGetAvailableUsers() {
+export const useGetAvailableUsers = () => {
   return useQuery({
     queryKey: userKeys.available(),
     queryFn: getAvailableUsers,

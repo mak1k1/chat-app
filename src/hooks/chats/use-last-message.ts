@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { chatKeys } from "./query-keys"
 import { Message, User } from "@prisma/client"
+import { fetchApi } from "@/lib/fetch"
 
 export interface LastMessageWithSender {
   message: Message | null
@@ -8,19 +9,7 @@ export interface LastMessageWithSender {
 }
 
 const getLastMessage = async (chatId: string): Promise<LastMessageWithSender> => {
-  try {
-    const response = await fetch(`/api/chats/${chatId}/last-message`)
-
-    if (!response.ok) {
-      const error = await response.json()
-      throw new Error(error.error || "Failed to fetch last message")
-    }
-
-    return response.json()
-  } catch (error) {
-    console.error(error)
-    throw error
-  }
+  return fetchApi<LastMessageWithSender>(`/api/chats/${chatId}/last-message`, {}, "Failed to fetch last message")
 }
 
 export const useLastMessage = (chatId: string) => {

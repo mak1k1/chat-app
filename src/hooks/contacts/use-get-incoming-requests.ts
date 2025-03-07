@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { contactKeys } from "./query-keys"
 import { User } from "@prisma/client"
+import { fetchApi } from "@/lib/fetch"
 
 interface IncomingRequest {
   id: string
@@ -11,13 +12,11 @@ interface IncomingRequest {
   sender: Pick<User, "id" | "firstName" | "lastName" | "email" | "imageUrl">
 }
 
-async function getIncomingRequests() {
-  const res = await fetch("/api/contact-requests/incoming")
-  if (!res.ok) throw new Error("Failed to fetch incoming requests")
-  return res.json() as Promise<IncomingRequest[]>
+const getIncomingRequests = async () => {
+  return fetchApi<IncomingRequest[]>(`/api/contact-requests/incoming`, {}, "Failed to fetch incoming requests")
 }
 
-export function useGetIncomingRequests() {
+export const useGetIncomingRequests = () => {
   return useQuery({
     queryKey: contactKeys.incoming(),
     queryFn: getIncomingRequests,

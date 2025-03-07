@@ -1,23 +1,17 @@
 import { useQuery } from "@tanstack/react-query"
 import { userKeys } from "./query-keys"
 import { Contact, User } from "@prisma/client"
+import { fetchApi } from "@/lib/fetch"
 
-export async function getUserContacts(): Promise<(Contact & { contact: User })[]> {
-  const response = await fetch(`/api/users/contacts/`)
-  const data = await response.json()
-
-  if (!response.ok) {
-    throw new Error(data.error || "Failed to search contacts")
-  }
-
-  return data
+const getUserContacts = async () => {
+  return fetchApi<Contact[]>(`/api/users/contacts/`, {}, "Failed to search contacts")
 }
 
 interface UseGetUserContactsOptions {
   initialData?: (Contact & { contact: User })[]
 }
 
-export function useGetUserContacts(options: UseGetUserContactsOptions = {}) {
+export const useGetUserContacts = (options: UseGetUserContactsOptions = {}) => {
   return useQuery({
     queryKey: userKeys.contacts(),
     queryFn: getUserContacts,

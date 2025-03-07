@@ -1,28 +1,22 @@
 import { useQuery } from "@tanstack/react-query"
 import { userKeys } from "./query-keys"
 import { User } from "@prisma/client"
+import { fetchApi } from "@/lib/fetch"
 
 interface SearchUsersOptions {
   phoneNumber: string
   enabled?: boolean
 }
 
-async function searchUsers(phoneNumber: string): Promise<User[]> {
-  const response = await fetch(`/api/users/search?phone=${encodeURIComponent(phoneNumber)}`)
-  const data = await response.json()
-
-  if (!response.ok) {
-    throw new Error(data.error || "Failed to search users")
-  }
-
-  return data
+const searchUsers = async (phoneNumber: string) => {
+  return fetchApi<User[]>(`/api/users/search?phone=${encodeURIComponent(phoneNumber)}`, {}, "Failed to search users")
 }
 
-export function useSearchUsers({ phoneNumber, enabled = true }: SearchUsersOptions) {
+export const useSearchUsers = (options: SearchUsersOptions) => {
   return useQuery({
-    queryKey: userKeys.search(phoneNumber),
-    queryFn: () => searchUsers(phoneNumber),
-    enabled: enabled && !!phoneNumber,
+    queryKey: userKeys.search(options.phoneNumber),
+    queryFn: () => searchUsers(options.phoneNumber),
+    enabled: options.enabled && !!options.phoneNumber,
     retry: false,
   })
 }

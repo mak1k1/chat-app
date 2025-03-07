@@ -1,17 +1,16 @@
 import { useQuery } from "@tanstack/react-query"
 import { contactKeys } from "./query-keys"
+import { fetchApi } from "@/lib/fetch"
 
 interface PendingRequest {
   recipientId: string
 }
 
-async function getPendingRequests() {
-  const res = await fetch("/api/contact-requests/pending")
-  if (!res.ok) throw new Error("Failed to fetch pending requests")
-  return res.json() as Promise<PendingRequest[]>
+const getPendingRequests = async () => {
+  return fetchApi<PendingRequest[]>(`/api/contact-requests/pending`, {}, "Failed to fetch pending requests")
 }
 
-export function useGetPendingRequests() {
+export const useGetPendingRequests = () => {
   return useQuery({
     queryKey: contactKeys.pending(),
     queryFn: getPendingRequests,
