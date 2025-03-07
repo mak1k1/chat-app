@@ -14,30 +14,24 @@ export const useSocketMessageHandler = () => {
   useEffect(() => {
     if (!socket || !isConnected) return
 
-    // Handle new messages
     const handleNewMessage = (message: Message) => {
-      // Update React Query cache directly
       queryClient.setQueryData(chatKeys.messages(message.chatId), (oldData: Message[] | undefined) => {
-        // If we don't have this data cached yet, don't do anything
         if (!oldData) return oldData
 
-        // Check for duplicates
         if (oldData.some(m => m.id === message.id)) return oldData
 
-        // Add new message to cache
         return [...oldData, message]
       })
 
-      // If this isn't the active chat, increment unread count
       if (message.chatId !== activeChatId) {
         incrementUnread(message.chatId)
       }
 
-      // Invalidate chat list to update last message
       queryClient.invalidateQueries({ queryKey: chatKeys.all() })
+
+      queryClient.invalidateQueries({ queryKey: chatKeys.lastMessage(message.chatId) })
     }
 
-    // Handle typing indicators
     const handleTypingStart = ({ chatId, userId }: { chatId: string; userId: string }) => {
       setTyping(chatId, userId, true)
     }

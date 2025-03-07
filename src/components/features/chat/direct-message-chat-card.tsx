@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ChatWithUsers } from "@/types/api/chats"
 import { useAuth } from "@clerk/nextjs"
+import { LastMessage } from "./last-message"
 
 interface DirectMessageChatCardProps {
   chat: ChatWithUsers
@@ -23,7 +24,7 @@ export const DirectMessageChatCard: React.FC<DirectMessageChatCardProps> = ({ ch
 
       <div className="flex-1 min-w-0">
         <p className="font-medium truncate">{displayName}</p>
-        <p className="text-sm text-muted-foreground truncate">{otherUser.phone || otherUser.email}</p>
+        <LastMessage chatId={chat.id} />
       </div>
     </div>
   )

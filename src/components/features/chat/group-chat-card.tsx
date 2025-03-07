@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ChatWithUsers } from "@/types/api/chats"
 import { Users } from "lucide-react"
+import { LastMessage } from "./last-message"
 
 interface GroupChatCardProps {
   chat: ChatWithUsers
@@ -8,7 +9,6 @@ interface GroupChatCardProps {
 
 export const GroupChatCard: React.FC<GroupChatCardProps> = ({ chat }) => {
   const { users, group } = chat
-
   const displayName = group?.name || users.map(user => user.user.firstName).join(", ")
 
   return (
@@ -22,7 +22,7 @@ export const GroupChatCard: React.FC<GroupChatCardProps> = ({ chat }) => {
 
       <div className="flex-1 min-w-0">
         <p className="font-medium truncate">{displayName}</p>
-        <p className="text-sm text-muted-foreground truncate">{`${users.length} members`}</p>
+        <LastMessage chatId={chat.id} />
       </div>
     </div>
   )
