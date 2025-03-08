@@ -4,11 +4,15 @@ import { Contact, User } from "@prisma/client"
 import { fetchApi } from "@/lib/fetch"
 
 const getUserContacts = async () => {
-  return fetchApi<Contact[]>(`/api/users/contacts/`, {}, "Failed to search contacts")
+  return fetchApi<ContactWithUser[]>(`/api/users/contacts/`, {}, "Failed to search contacts")
+}
+
+interface ContactWithUser extends Contact {
+  contact: User
 }
 
 interface UseGetUserContactsOptions {
-  initialData?: (Contact & { contact: User })[]
+  initialData?: ContactWithUser[]
 }
 
 export const useGetUserContacts = (options: UseGetUserContactsOptions = {}) => {
