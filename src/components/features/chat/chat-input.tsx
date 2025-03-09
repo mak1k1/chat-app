@@ -63,8 +63,9 @@ export const ChatInput: React.FC<ChatInputProps> = ({ chatId }) => {
           placeholder="Type a message..."
           className="flex-1 min-h-[44px] max-h-32 resize-none"
           rows={1}
+          suppressHydrationWarning
         />
-        <Button onClick={handleSendMessage} disabled={!draftMessage.trim() ? true : undefined} size="icon">
+        <Button onClick={handleSendMessage} disabled={!draftMessage.trim()} size="icon" suppressHydrationWarning>
           <Send className="h-4 w-4" />
         </Button>
       </div>
