@@ -37,6 +37,7 @@ export const useDraftMessagesStore = create<DraftMessagesState>()(
     {
       name: "chat-drafts-by-chat-id",
       partialize: state => ({ drafts: state.drafts }),
+      skipHydration: true,
     }
   )
 )

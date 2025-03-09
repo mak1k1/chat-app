@@ -1,5 +1,5 @@
 import { useDraftMessagesStore } from "@/store/draft-messages-store"
-import { useCallback } from "react"
+import { useCallback, useEffect } from "react"
 
 export const useDraftMessage = (chatId: string) => {
   const { setDraft, getDraft, clearDraft } = useDraftMessagesStore()
@@ -17,9 +17,18 @@ export const useDraftMessage = (chatId: string) => {
     clearDraft(chatId)
   }, [chatId, clearDraft])
 
+  const rehydrate = useCallback(() => {
+    useDraftMessagesStore.persist.rehydrate()
+  }, [])
+
+  useEffect(() => {
+    rehydrate()
+  }, [rehydrate])
+
   return {
     draftMessage,
     updateDraft,
     clearDraftMessage,
+    rehydrate,
   }
 }
